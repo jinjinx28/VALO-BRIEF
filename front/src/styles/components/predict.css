@@ -1,0 +1,53 @@
+/* PredictBox (승부예측 VS 대결 박스) */
+
+.pv-team {
+  text-align:center;
+}
+
+.pv-team .avatar-frame {
+  margin:0 auto 12px;
+}
+
+.pv-team .tname {
+  font-size:20px;
+}
+
+.pv-label {
+  font-size:11px;
+   color:var(--text-2);
+   letter-spacing:0.08em;
+   text-transform:uppercase;
+   margin-bottom:6px;
+}
+
+.pv-center {
+  text-align:center;
+}
+
+.pv-percent {
+  font-family:'JetBrains Mono',monospace;
+   font-size:32px;
+   font-weight:700;
+}
+
+.pv-vs-bar {
+  width:220px;
+   height:10px;
+   border-radius:5px;
+   overflow:hidden;
+   display:flex;
+   margin:12px 0;
+}
+
+.pv-vs-bar .a {
+  background:var(--win);
+}
+
+.pv-vs-bar .b {
+  background:var(--lose);
+}
+
+.pv-recent20 {
+  font-size:11px;
+   color:var(--text-2);
+}
