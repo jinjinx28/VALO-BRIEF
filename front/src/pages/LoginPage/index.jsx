@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { login } from '../../api/auth';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import '@/styles/pages/login.css';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -40,7 +42,7 @@ export default function LoginPage() {
             onClick={() => setShowPassword((v) => !v)}
             aria-label="비밀번호 표시 전환"
           >
-            {showPassword ? '🙈' : '👁'}
+            {showPassword ? <FaEyeSlash className="eye-icon" /> : <FaEye className="eye-icon" />}
           </button>
         </div>
         <div className="checkbox-row">
