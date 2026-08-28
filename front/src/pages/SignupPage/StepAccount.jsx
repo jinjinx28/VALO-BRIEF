@@ -1,13 +1,16 @@
 export default function StepAccount({ form, onChange, onNext }) {
   return (
     <div className="auth-col">
-      <div className="auth-steps">
-        <div className="step-chip active" />
-        <div className="step-chip" />
+      <div className="signup-progress-wrap">
+        <div className="signup-progress">
+          <div className="signup-progress-bar active" />
+          <div className="signup-progress-bar" />
+        </div>
+        <div className="signup-step-label">STEP 1 / 2</div>
       </div>
-      <div className="auth-title display">
-        SIGN UP <span className="step-label">STEP 1 / 2</span>
-      </div>
+
+      <div className="auth-title display">SIGN UP</div>
+
       <div className="field">
         <input value={form.email} onChange={(e) => onChange('email', e.target.value)} placeholder="e - mail" />
       </div>
@@ -15,7 +18,12 @@ export default function StepAccount({ form, onChange, onNext }) {
         <input value={form.id} onChange={(e) => onChange('id', e.target.value)} placeholder="id" />
       </div>
       <div className="field">
-        <input type="password" value={form.password} onChange={(e) => onChange('password', e.target.value)} placeholder="password" />
+        <input
+          type="password"
+          value={form.password}
+          onChange={(e) => onChange('password', e.target.value)}
+          placeholder="password"
+        />
       </div>
       <div className="field">
         <input
@@ -25,14 +33,16 @@ export default function StepAccount({ form, onChange, onNext }) {
           placeholder="confirm password"
         />
       </div>
+
       <div className="checkbox-row">
         <input
           type="checkbox"
           checked={form.agree}
           onChange={(e) => onChange('agree', e.target.checked)}
         />
-        [필수] 이용약관 및 개인정보 수집·이용에 동의합니다.
+        <span>[필수] 이용약관 및 개인정보 수집·이용에 동의합니다.</span>
       </div>
+
       <button className="btn-auth-pill" onClick={onNext} type="button">next &gt;</button>
     </div>
   );

@@ -49,27 +49,17 @@
 /* 3. LOG IN 타이틀 정렬 및 여백 */
 .auth-title-lg {
   font-family: var(--font-display);
-  font-size: var(--fs-3xl);
+  font-size: 2.7rem;
   font-weight: 800;
   color: #ffffff;
-  margin-bottom: var(--sp-8); 
+  margin-bottom: 2.5rem;
   letter-spacing: 0.05em;
 }
 
 /* 4. Input 영역 폭 100% 및 내부 여백 */
 .field {
   width: 100%;
-  margin-bottom: var(--sp-5); 
-}
-
-.field input {
-  width: 100%;
-  padding: var(--sp-4) var(--sp-5); 
-  background: rgba(255, 255, 255, 0.9);
-  border: none;
-  border-radius: var(--radius-sm);
-  color: #111;
-  font-size: var(--fs-base);
+  margin-bottom: 1.5rem;
 }
 
 /* 5. 아이디 저장 체크박스 */
@@ -77,15 +67,15 @@
   width: 100%;
   display: flex;
   align-items: center;
-  gap: var(--sp-2);
-  margin-top: var(--sp-1);
-  margin-bottom: var(--sp-8); 
-  font-size: var(--fs-sm);
-  color: var(--text-2);
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 2.5rem;
+  font-size: 0.875rem;
+  color: #a0a0a0;
   justify-content: flex-start;
 }
 
-/* 6. 알약 버튼 중앙 및 형태 수정 */
+/* 6. 알약 버튼 스타일 */
 .btn-auth-pill {
   width: 100%;
   max-width: 280px; 
@@ -93,8 +83,10 @@
   border-radius: var(--radius-pill);
   background: var(--accent);
   color: #ffffff;
-  font-weight: 700;
-  font-size: var(--fs-base);
+  font-weight: 800; 
+  font-size: var(--fs-lg, 1.125rem); 
+  text-transform: uppercase; 
+  letter-spacing: 0.5em; 
   border: none;
   cursor: pointer;
   transition: transform 0.15s ease, background-color 0.2s ease;
@@ -107,9 +99,9 @@
 
 /* 7. 하단 링크 */
 .auth-foot-link {
-  margin-top: var(--sp-8); 
-  font-size: var(--fs-sm);
-  color: var(--text-2);
+  margin-top: 2.5rem;
+  font-size: 0.875rem;
+  color: #a0a0a0;
 }
 
 .auth-foot-link a {
