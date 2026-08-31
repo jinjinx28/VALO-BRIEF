@@ -12,8 +12,6 @@ const INITIAL_FORM = {
   agree: false,
   teamName: '',
   teamTag: '',
-  riotGameName: '',
-  riotTagLine: '',
 };
 
 export default function SignupPage() {

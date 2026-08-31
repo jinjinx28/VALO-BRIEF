@@ -1,12 +1,16 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
+import { ROUTES } from '../../constants/routes';
+
+const DEMO_TEAM_NAME = 'team-ascend';
+const DEMO_TEAM_TAG = 'ASC';
 
 const MENU_LINKS = [
   { label: '개인 검색', to: '/players/example/0000' },
-  { label: '상대팀 전적 검색', to: '/teams/example' },
-  { label: '승부 예측', to: '/predict/example' },
-  { label: '우리팀 분석', to: '/my-team' },
+  { label: '상대팀 전적 검색', to: ROUTES.team(DEMO_TEAM_NAME, DEMO_TEAM_TAG) },
+  { label: '승부 예측', to: ROUTES.predict(DEMO_TEAM_NAME, DEMO_TEAM_TAG) },
+  { label: '우리팀 분석', to: ROUTES.myTeam },
 ];
 
 export default function MainHeader() {

@@ -1,6 +1,7 @@
 import { getAsset } from '@/assets';
+import FeatureLink from '../../components/common/FeatureLink';
 
-export default function FeatureRow({ index, title, description, linkText }) {
+export default function FeatureRow({ index, title, description, linkText, to, onClick }) {
   const media = getAsset('hero', `feature-${index}`);
 
   return (
@@ -18,7 +19,9 @@ export default function FeatureRow({ index, title, description, linkText }) {
             <h4>{title}</h4>
             <p>{description}</p>
           </div>
-          <div className="feature-row-link">{linkText} →</div>
+          <FeatureLink to={to} onClick={onClick} className="feature-row-link">
+            {linkText} →
+          </FeatureLink>
         </div>
       </div>
     </div>

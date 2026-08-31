@@ -64,6 +64,23 @@ background:var(--bg-panel);
    gap:8px;
 }
 
+.select-box select {
+  appearance:none;
+  -webkit-appearance:none;
+  background:transparent;
+  border:none;
+  color:var(--text-2);
+  font-size:13px;
+  font-family:inherit;
+  cursor:pointer;
+  outline:none;
+}
+
+.select-box select option {
+  background:var(--bg-panel-2);
+  color:var(--text-1);
+}
+
 .refresh-btn {
 display:flex;
    align-items:center;
@@ -81,6 +98,17 @@ display:flex;
 color:var(--text-3);
    font-weight:400;
    font-family:'JetBrains Mono',monospace;
+}
+
+.refresh-btn.active {
+  color: var(--success);
+  border-color: var(--success);
+}
+
+.refresh-btn.disabled {
+  color: var(--text-3);
+  border-color: var(--border);
+  cursor: not-allowed;
 }
 
 .rank-chip {
@@ -157,4 +185,29 @@ font-size:11px;
 font-family:'JetBrains Mono',monospace;
    font-weight:700;
    font-size:22px;
+}
+
+.recent-summary-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-8);
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-6) var(--sp-8);
+  margin-bottom: var(--sp-6);
+}
+
+.recent-summary-left {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+}
+
+.recent-summary-pct {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: var(--fs-3xl);
+  color: var(--text-1);
 }

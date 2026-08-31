@@ -1,27 +1,5 @@
 /* ===================== LOGIN PAGE ===================== */
 
-/* 1. 배경 전체 블러 및 컨테이너 */
-.login-page, 
-.auth-container {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-/* 배경 이미지 전체 블러 처리 */
-.login-page::before, 
-.auth-container::before {
-  content: '';
-  position: absolute;
-  inset: -20px; 
-  background: url('@/assets/images/login-bg.jpg') no-repeat center center / cover;
-  filter: blur(8px) brightness(0.85); 
-  z-index: 0;
-}
-
 /* 2. 박스 배경 제거 및 중앙 정렬 */
 .auth-col {
   position: relative;

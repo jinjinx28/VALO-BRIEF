@@ -1,15 +1,16 @@
 import { useState } from 'react';
+import { validatePassword } from '../../utils/passwordPolicy';
+import { checkIdAvailable } from '../../api/auth';
 
 export default function StepAccount({ form, onChange, onNext }) {
   const [errors, setErrors] = useState({});
+  const [checkingId, setCheckingId] = useState(false);
 
   // 정규식 정의
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  // 비밀번호: 8자 이상, 영문 / 숫자/특수문자(!@#$%^&*) 포함
-  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
 
   // 다음 단계 이동 핸들러
-  const handleNext = () => {
+  const handleNext = async () => {
     let newErrors = {};
 
     // 1. 이메일 형식 검사
@@ -27,7 +28,7 @@ export default function StepAccount({ form, onChange, onNext }) {
     // 3. 비밀번호 제약 조건 검사
     if (!form.password) {
       newErrors.password = '비밀번호를 입력해 주세요.';
-    } else if (!passwordRegex.test(form.password)) {
+    } else if (!validatePassword(form.password)) {
       newErrors.password = '8자 이상, 영문·숫자·특수문자를 조합해 주세요.';
     }
 
@@ -41,6 +42,21 @@ export default function StepAccount({ form, onChange, onNext }) {
     // 5. 약관 동의 검사
     if (!form.agree) {
       newErrors.agree = '이용약관에 동의해 주세요.';
+    }
+
+    // 아이디 형식이 유효할 때만 서버(mock) 중복 확인을 시도
+    if (!newErrors.id) {
+      setCheckingId(true);
+      try {
+        const res = await checkIdAvailable(form.id.trim());
+        if (!res.available) {
+          newErrors.id = '이미 사용 중인 아이디입니다.';
+        }
+      } catch {
+        newErrors.id = '아이디 확인 중 오류가 발생했습니다.';
+      } finally {
+        setCheckingId(false);
+      }
     }
 
     setErrors(newErrors);
@@ -90,7 +106,8 @@ export default function StepAccount({ form, onChange, onNext }) {
             placeholder="id"
           />
         </div>
-        {errors.id && <span className="field-error-msg">{errors.id}</span>}
+        {checkingId && <span className="field-error-msg">아이디 중복 확인 중...</span>}
+        {!checkingId && errors.id && <span className="field-error-msg">{errors.id}</span>}
       </div>
 
       {/* 비밀번호 */}
@@ -143,8 +160,8 @@ export default function StepAccount({ form, onChange, onNext }) {
         {errors.agree && <span className="field-error-msg">{errors.agree}</span>}
       </div>
 
-      <button className="btn-auth-pill" onClick={handleNext} type="button">
-        NEXT &gt;
+      <button className="btn-auth-pill" onClick={handleNext} type="button" disabled={checkingId}>
+        {checkingId ? '확인 중...' : 'NEXT >'}
       </button>
     </div>
   );

@@ -1,6 +1,7 @@
 import EmptyImageBox from '../common/EmptyImageBox';
 import DropdownSelect from '../common/DropdownSelect';
 import ComboBlock from './ComboBlock';
+import { MAPS } from '../../constants/maps';
 
 export default function MapInfoBlock({ data, onMapChange }) {
   const items = [
@@ -21,7 +22,7 @@ export default function MapInfoBlock({ data, onMapChange }) {
     <div className="analysis-row">
       <div className="analysis-row-head">
         <h5>② 맵 정보</h5>
-        <DropdownSelect icon="🗺" label={data.selectedMap} onClick={onMapChange} />
+        <DropdownSelect icon="🗺" label={data.selectedMap} options={MAPS} value={data.selectedMap} onChange={onMapChange} />
       </div>
       <div className="map-analysis-body">
         <EmptyImageBox

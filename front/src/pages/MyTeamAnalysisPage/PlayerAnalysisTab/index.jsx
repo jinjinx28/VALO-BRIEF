@@ -8,6 +8,7 @@ export default function PlayerAnalysisTab() {
   const [players, setPlayers] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
   const [detail, setDetail] = useState(null);
+  const [view, setView] = useState('list'); // 'list' | 'detail'
 
   useEffect(() => {
     fetchMyTeamPlayers().then(setPlayers);
@@ -20,9 +21,19 @@ export default function PlayerAnalysisTab() {
 
   if (!players) return <LoadingText />;
 
-  if (selectedId && detail) {
-    return <PlayerDetailView player={detail} onBack={() => setSelectedId(null)} />;
+  function handleSelect(id) {
+    setSelectedId(id);
+    setView('detail');
   }
 
-  return <PlayerListView players={players} onSelect={setSelectedId} />;
+  // 뒤로가기 후에도 selectedId는 유지 → 목록에서 "마지막으로 선택한 선수"가 계속 표시됩니다.
+  function handleBack() {
+    setView('list');
+  }
+
+  if (view === 'detail') {
+    return detail ? <PlayerDetailView player={detail} onBack={handleBack} /> : <LoadingText />;
+  }
+
+  return <PlayerListView players={players} selectedId={selectedId} onSelect={handleSelect} />;
 }

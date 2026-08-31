@@ -4,6 +4,7 @@ import { fetchQuickAnalysis } from '../../api/teams';
 import EmptyImageBox from '../../components/common/EmptyImageBox';
 import MiniRankTable from '../../components/common/MiniRankTable';
 import { ratingKey } from '@/utils/ratingKey';
+import { ROUTES } from '../../constants/routes';
 
 /**
  * 통합검색에서 '팀명#태그'로 검색했을 때 뜨는 팝업.
@@ -68,7 +69,12 @@ export default function QuickAnalysisModal({ teamTag, onClose }) {
             <MiniRankTable players={data.playerRanking} showAdr />
           </div>
         </div>
-        <Link to={`/teams/${data.teamTag}`} className="popup-cta">상세 정보 보기 →</Link>
+        <Link
+          to={ROUTES.team(data.teamName.replace(/\s+/g, '-').toLowerCase(), data.teamTag)}
+          className="popup-cta"
+        >
+          상세 정보 보기 →
+        </Link>
       </div>
     </div>
   );

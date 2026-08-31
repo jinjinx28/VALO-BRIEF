@@ -1,51 +1,9 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { getAsset } from '@/assets';
+import SearchBox from '../../components/search/SearchBox';
+import FeatureLink from '../../components/common/FeatureLink';
 
-// 닉네임#태그 유효성 검사 
-const isValidRiotId = (input) => /^.+#.+$/.test(input.trim());
-
-export default function Hero() {
+export default function Hero({ pills = [] }) {
   const heroImage = getAsset('hero', 'home');
-  const navigate = useNavigate();
-
-  const [searchTerm, setSearchTerm] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [showErrorToast, setShowErrorToast] = useState(false);
-
-  // 팝업(토스트) 노출 및 자동 닫힘 처리
-  const triggerErrorToast = (msg) => {
-    setErrorMessage(msg);
-    setShowErrorToast(true);
-    setTimeout(() => {
-      setShowErrorToast(false);
-    }, 3000);
-  };
-
-  const handleSearch = () => {
-    const trimmed = searchTerm.trim();
-
-    if (!trimmed) {
-      triggerErrorToast('검색어를 입력해 주세요.');
-      return;
-    }
-
-    if (!isValidRiotId(trimmed)) {
-      triggerErrorToast('올바른 형식으로 입력해 주세요. ( ex. 뇽따까리#0208 )');
-      return;
-    }
-
-    setShowErrorToast(false);
-
-    // 선수 개인 전적 페이지로 이동
-    navigate('/players/example/0000');
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      handleSearch();
-    }
-  };
 
   return (
     <>
@@ -61,36 +19,14 @@ export default function Hero() {
           </p>
 
           <div className="hero-center-group">
-            {showErrorToast && (
-              <div className="search-error-toast">
-                {errorMessage}
-              </div>
-            )}
-
-            {/* 검색 영역 */}
-            <div className="hero-search-row">
-              <input
-                className="hero-search-input"
-                placeholder="상대 팀명 또는 팀원 라이엇 ID (예: 닉네임#태그)"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onKeyDown={handleKeyDown}
-              />
-              <button type="button" className="btn-search" onClick={handleSearch}>
-                SEARCH
-              </button>
-            </div>
+            <SearchBox variant="hero" />
 
             <div className="feature-pills">
-              <span className="feature-pill">
-                정확한 승률 예측
-              </span>
-              <span className="feature-pill">
-                AI 전술 분석
-              </span>
-              <span className="feature-pill">
-                맞춤 전략 제안
-              </span>
+              {pills.map((pill) => (
+                <FeatureLink key={pill.label} to={pill.to} onClick={pill.onClick} className="feature-pill">
+                  {pill.label}
+                </FeatureLink>
+              ))}
             </div>
           </div>
         </div>

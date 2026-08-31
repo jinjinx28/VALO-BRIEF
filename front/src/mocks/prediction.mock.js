@@ -7,24 +7,99 @@ export const predictionMock = {
       atkWinRate: 54, defWinRate: 61, pistolWinRate: 70, ecoWinRate: 32,
       fbWinPct: 68, fdLosePct: 74,
     },
-    mapInfo: {
-      selectedMap: '어센트',
-      mapWinRate: 70, atkWinRate: 52, defWinRate: 65,
-      preferredSites: { A: 48, B: 33, center: 19 },
-      avgSpikePlantTime: 32,
-      matchSample: 13,
-      combos: [
-        { label: '조합 A', pct: 34 },
-        { label: '조합 B', pct: 21 },
-      ],
-      comboAce: [
-        { name: 'Nova', acs: 274 },
-        { name: 'Dash', acs: 235 },
-      ],
-      comboWeakness: [
-        { name: 'Ruko', fd: 61, acs: 196 },
-        { name: 'Solstice', fd: 58, acs: 180 },
-      ],
+    // 맵별로 키를 나눠 관리합니다. 실제 백엔드 연동 시에는 fetchPrediction(teamName, teamTag, { map })
+    // 처럼 맵을 쿼리 파라미터로 넘겨 서버가 이 구조와 동일한 단일 맵 데이터를 내려주면 됩니다.
+    mapInfoByMap: {
+      '어센트': {
+        mapWinRate: 70, atkWinRate: 52, defWinRate: 65,
+        preferredSites: { A: 48, B: 33, center: 19 },
+        avgSpikePlantTime: 32,
+        matchSample: 13,
+        combos: [
+          { label: '조합 A', pct: 34 },
+          { label: '조합 B', pct: 21 },
+        ],
+        comboAce: [
+          { name: 'Nova', acs: 274 },
+          { name: 'Dash', acs: 235 },
+        ],
+        comboWeakness: [
+          { name: 'Ruko', fd: 61, acs: 196 },
+          { name: 'Solstice', fd: 58, acs: 180 },
+        ],
+      },
+      '바인드': {
+        mapWinRate: 55, atkWinRate: 48, defWinRate: 61,
+        preferredSites: { A: 41, B: 40, center: 19 },
+        avgSpikePlantTime: 35,
+        matchSample: 11,
+        combos: [
+          { label: '조합 A', pct: 29 },
+          { label: '조합 B', pct: 18 },
+        ],
+        comboAce: [
+          { name: 'Dash', acs: 251 },
+          { name: 'Iris', acs: 219 },
+        ],
+        comboWeakness: [
+          { name: 'Solstice', fd: 55, acs: 171 },
+          { name: 'Ruko', fd: 49, acs: 165 },
+        ],
+      },
+      '헤이븐': {
+        mapWinRate: 42, atkWinRate: 39, defWinRate: 45,
+        preferredSites: { A: 30, B: 28, center: 42 },
+        avgSpikePlantTime: 38,
+        matchSample: 10,
+        combos: [
+          { label: '조합 A', pct: 25 },
+          { label: '조합 B', pct: 22 },
+        ],
+        comboAce: [
+          { name: 'Iris', acs: 233 },
+          { name: 'Nova', acs: 227 },
+        ],
+        comboWeakness: [
+          { name: 'Ruko', fd: 52, acs: 170 },
+          { name: 'Solstice', fd: 47, acs: 160 },
+        ],
+      },
+      '스플릿': {
+        mapWinRate: 66, atkWinRate: 58, defWinRate: 60,
+        preferredSites: { A: 55, B: 26, center: 19 },
+        avgSpikePlantTime: 30,
+        matchSample: 9,
+        combos: [
+          { label: '조합 A', pct: 31 },
+          { label: '조합 B', pct: 20 },
+        ],
+        comboAce: [
+          { name: 'Nova', acs: 281 },
+          { name: 'Dash', acs: 240 },
+        ],
+        comboWeakness: [
+          { name: 'Solstice', fd: 60, acs: 188 },
+          { name: 'Ruko', fd: 53, acs: 179 },
+        ],
+      },
+      '로터스': {
+        mapWinRate: 38, atkWinRate: 33, defWinRate: 43,
+        preferredSites: { A: 24, B: 36, center: 40 },
+        avgSpikePlantTime: 34,
+        matchSample: 8,
+        combos: [
+          { label: '조합 A', pct: 22 },
+          { label: '조합 B', pct: 19 },
+        ],
+        comboAce: [
+          { name: 'Dash', acs: 224 },
+          { name: 'Iris', acs: 205 },
+        ],
+        comboWeakness: [
+          { name: 'Ruko', fd: 57, acs: 162 },
+          { name: 'Solstice', fd: 50, acs: 155 },
+        ],
+      },
     },
     engagementInfo: {
       trade1v1: 58, trade1v2: 31,
@@ -55,10 +130,7 @@ export const predictionMock = {
       { label: 'MID · 20-60초', text: 'A 사이트로의 로테이션이 잦은 경향이 있어, 중립 지역 컨트롤을 통해 사이트 스왑을 조기에 파악하는 것이 중요합니다.' },
       { label: 'LATE · 60초~', text: 'Eco/열세 상황에서 무리한 교전을 시도하는 경향이 있으므로, 안전한 포지셔닝으로 상대의 실수를 유도하세요.' },
     ],
-    pickPriority: [
-      { agent: '오멘', reason: '상대 감시자 조합 대비 유리한 스모크 라인업 확보 가능, 사이트 정보 차단에 효과적' },
-      { agent: '소바', reason: '상대의 빠른 로테이션 패턴을 사전에 탐지해 A 사이트 스왑에 대응' },
-      { agent: '킬조이', reason: 'Eco 라운드 방어 시 정보 및 지연 효과로 상대의 취약한 자금 상황을 극대화' },
-    ],
+    opponentPickAnalysisText:
+      'Team Ascend는 최근 경기에서 Nova(제트)와 Dash(레이나)를 중심으로 한 공격적인 듀얼리스트 조합을 선호하며, 특히 어센트/스플릿에서 두 요원의 ACS가 두드러지게 높게 나타납니다. 감시자 포지션의 개입 빈도가 낮아 초반 정보 부족에 취약한 편이므로, 정찰 스킬을 적극적으로 활용해 로테이션 타이밍을 미리 파악하는 것이 유효할 것으로 보입니다. 반대로 Eco/열세 라운드에서는 스택 플레이 대신 개별 교전을 시도하는 경향이 있어, 인원 우위 상황에서 조합적으로 대응하면 트레이드 성공률을 높일 수 있습니다.',
   },
 };

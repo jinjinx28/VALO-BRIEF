@@ -1,12 +1,15 @@
 import EmptyImageBox from '../common/EmptyImageBox';
 import SelectBox from '../common/SelectBox';
 import { ratingKey } from '@/utils/ratingKey';
+import { SEASONS, ACTS } from '../../constants/seasons';
 
 /**
  * type: 'player' | 'team'
  * player 모드: nickname, tag, level, title, onRefresh(전적 갱신 버튼)
  * team 모드: name, tag, division, avatarKey(팀 로고 asset key, 기본값 = tag)
  * showSeasonSelect: 시즌/Act 선택박스 표시 여부
+ * season/onSeasonChange, act/onActChange: 필터 상태(부모의 useSeasonActFilter에서 전달)
+ * refreshDisabled: 전적갱신 쿨다운 활성화 여부(true면 비활성 스타일)
  */
 export default function ProfileHeader({
   type = 'team',
@@ -17,7 +20,12 @@ export default function ProfileHeader({
   division,
   lastUpdated,
   onRefresh,
+  refreshDisabled = false,
   showSeasonSelect = true,
+  season,
+  onSeasonChange,
+  act,
+  onActChange,
   avatarKey,
 }) {
   return (
@@ -53,14 +61,19 @@ export default function ProfileHeader({
       </div>
       <div className="profile-side">
         {type === 'player' && onRefresh ? (
-          <button className="refresh-btn" onClick={onRefresh} type="button">
+          <button
+            className={`refresh-btn ${refreshDisabled ? 'disabled' : 'active'}`}
+            onClick={onRefresh}
+            disabled={refreshDisabled}
+            type="button"
+          >
             ⟳ 전적 갱신 <span className="time">{lastUpdated}</span>
           </button>
         ) : null}
         {showSeasonSelect ? (
           <>
-            <SelectBox label="S2026" />
-            <SelectBox label="Act 2" />
+            <SelectBox label={season} options={SEASONS} value={season} onChange={onSeasonChange} />
+            <SelectBox label={act} options={ACTS} value={act} onChange={onActChange} />
           </>
         ) : null}
       </div>

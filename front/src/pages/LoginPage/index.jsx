@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { login } from '../../api/auth';
+import { useAuth } from '../../context/AuthContext';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import '@/styles/pages/login.css';
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { applySession } = useAuth();
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -42,7 +44,8 @@ export default function LoginPage() {
     if (hasError) return;
 
     try {
-      await login({ id, password });
+      const result = await login({ id, password });
+      applySession(result);
 
       if (rememberMe) {
         localStorage.setItem('savedUserId', id.trim());

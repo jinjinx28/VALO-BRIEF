@@ -1,10 +1,18 @@
+import { useState } from 'react';
 import StatInlineGrid from '../../../components/common/StatInlineGrid';
 import EmptyImageBox from '../../../components/common/EmptyImageBox';
 import DuelCompareBar from '../../../components/common/DuelCompareBar';
+import DropdownSelect from '../../../components/common/DropdownSelect';
+import LineChart from '../../../components/common/LineChart';
+import { MAPS } from '../../../constants/maps';
+
+const MAP_OPTIONS = ['전체 맵', ...MAPS];
 
 /** Frame 11 — 선수 상세 (라운드 정보 / 에임 정보 / 교전 정보) */
 export default function PlayerDetailView({ player, onBack }) {
-  const { roundInfo, aim, engagement } = player;
+  const { aim, engagement } = player;
+  const [selectedMap, setSelectedMap] = useState('전체 맵');
+  const roundInfo = player.roundInfoByMap[selectedMap];
 
   return (
     <>
@@ -16,7 +24,7 @@ export default function PlayerDetailView({ player, onBack }) {
       <div className="analysis-row">
         <div className="analysis-row-head">
           <h5>① 라운드 정보</h5>
-          <div className="map-select">🗺 전체 맵 ▾</div>
+          <DropdownSelect icon="🗺" label={selectedMap} options={MAP_OPTIONS} value={selectedMap} onChange={setSelectedMap} />
         </div>
         <div className="subsection-title">공격 / 수비</div>
         <StatInlineGrid
@@ -129,10 +137,9 @@ export default function PlayerDetailView({ player, onBack }) {
 
         <div className="duel-compare-block">
           <div className="duel-compare-title">교전 거리 분포</div>
-          <EmptyImageBox
-            className="distance-chart-box"
-            label={`교전 거리 히스토그램 영역\n(근거리 / 중거리 / 원거리 비율 그래프)`}
-          />
+          <div className="line-chart-wrap">
+            <LineChart points={engagement.distanceDistribution} />
+          </div>
         </div>
       </div>
     </>

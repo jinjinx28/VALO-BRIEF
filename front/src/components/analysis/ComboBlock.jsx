@@ -16,7 +16,7 @@ export default function ComboBlock({ title = '선호 요원 조합', combos, ace
 
       <div className="combo-detail-cols">
         <div>
-          <div className="combo-detail-title text-win">조합 ACE</div>
+          <div className="combo-detail-title text-win">BEST</div>
           {ace.map((p) => (
             <div className="combo-detail-row" key={p.name}>
               <span>{p.name}</span>
@@ -25,7 +25,7 @@ export default function ComboBlock({ title = '선호 요원 조합', combos, ace
           ))}
         </div>
         <div>
-          <div className="combo-detail-title text-lose">조합 약점</div>
+          <div className="combo-detail-title text-lose">WORST</div>
           {weakness.map((p) => (
             <div className="combo-detail-row" key={p.name}>
               <span>{p.name}</span>

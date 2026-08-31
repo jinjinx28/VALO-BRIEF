@@ -8,10 +8,17 @@ import TopAgentsList from './TopAgentsList';
 import MatchHistoryList from '../../components/match/MatchHistoryList';
 import DonutChart from '../../components/common/DonutChart';
 import LoadingText from '../../components/common/LoadingText';
+import { useSeasonActFilter } from '../../hooks/useSeasonActFilter';
+import { useListFilter } from '../../hooks/useListFilter';
+import { useCooldown } from '../../hooks/useCooldown';
+import { MODES } from '../../constants/modes';
 
 export default function PlayerProfilePage() {
   const { riotId, tag } = useParams();
   const [profile, setProfile] = useState(null);
+  const [mode, setMode] = useState('전체');
+  const { season, setSeason, act, setAct } = useSeasonActFilter();
+  const { isReady, trigger } = useCooldown(`${riotId}-${tag}`);
 
   useEffect(() => {
     let active = true;
@@ -21,10 +28,20 @@ export default function PlayerProfilePage() {
     return () => { active = false; };
   }, [riotId, tag]);
 
+  const filteredHistory = useListFilter(
+    profile?.matchHistory,
+    (m) => (mode === '전체' || m.mode === mode) && m.season === season && m.act === act
+  );
+
   if (!profile) return <LoadingText />;
 
+  function handleRefresh() {
+    trigger();
+    fetchPlayerProfile(riotId, tag).then(setProfile);
+  }
+
   return (
-    <>
+    <div className="page-container">
       <ProfileHeader
         type="player"
         name={profile.nickname}
@@ -32,15 +49,24 @@ export default function PlayerProfilePage() {
         level={profile.level}
         title={profile.title}
         lastUpdated={profile.lastUpdated}
-        onRefresh={() => fetchPlayerProfile(riotId, tag).then(setProfile)}
+        onRefresh={handleRefresh}
+        refreshDisabled={!isReady}
+        season={season}
+        onSeasonChange={setSeason}
+        act={act}
+        onActChange={setAct}
       />
 
       <div className="mode-tabs">
-        <div className="mode-tab on">전체</div>
-        <div className="mode-tab">경쟁전</div>
-        <div className="mode-tab">일반</div>
-        <div className="mode-tab">신속 플레이</div>
-        <div className="mode-tab">데스매치</div>
+        {MODES.map((m) => (
+          <div
+            key={m}
+            className={`mode-tab ${mode === m ? 'on' : ''}`.trim()}
+            onClick={() => setMode(m)}
+          >
+            {m}
+          </div>
+        ))}
       </div>
 
       <ModeStatCards modeStats={profile.modeStats} />
@@ -61,8 +87,8 @@ export default function PlayerProfilePage() {
           <TopAgentsList agents={profile.topAgents} />
         </div>
 
-        <MatchHistoryList matches={profile.matchHistory} total={20} />
+        <MatchHistoryList matches={filteredHistory} total={20} />
       </div>
-    </>
+    </div>
   );
 }

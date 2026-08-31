@@ -1,5 +1,5 @@
 import PhaseRow from '../../components/aiReport/PhaseRow';
-import PickPriorityList from '../../components/aiReport/PickPriorityList';
+import OpponentPickAnalysis from '../../components/aiReport/OpponentPickAnalysis';
 
 export default function AiReportTab({ report, opponentName }) {
   return (
@@ -28,7 +28,7 @@ export default function AiReportTab({ report, opponentName }) {
         <PhaseRow phases={report.phases} />
       </div>
       <div className="ai-report-section">
-        <PickPriorityList picks={report.pickPriority} />
+        <OpponentPickAnalysis text={report.opponentPickAnalysisText} />
       </div>
     </div>
   );

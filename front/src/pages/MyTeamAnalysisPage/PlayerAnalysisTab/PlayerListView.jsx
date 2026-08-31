@@ -1,19 +1,52 @@
+import { useState } from 'react';
 import EmptyImageBox from '../../../components/common/EmptyImageBox';
 
-/** Frame 10 — ACS 오름차순 정렬된 선수 리스트 */
-export default function PlayerListView({ players, onSelect }) {
-  const sorted = [...players].sort((a, b) => a.acs - b.acs);
+const SORTABLE_COLUMNS = [
+  { key: 'kd', label: 'K/D' },
+  { key: 'hs', label: '헤드샷' },
+  { key: 'adr', label: 'ADR' },
+  { key: 'acs', label: 'ACS' },
+];
+
+/** Frame 10 — 선수 리스트 (컬럼 정렬 가능, 선택된 선수는 강조 표시) */
+export default function PlayerListView({ players, selectedId, onSelect }) {
+  const [sortKey, setSortKey] = useState('acs');
+  const [sortDir, setSortDir] = useState('asc');
+
+  const sorted = [...players].sort((a, b) =>
+    sortDir === 'asc' ? a[sortKey] - b[sortKey] : b[sortKey] - a[sortKey]
+  );
+
+  function handleSort(key) {
+    if (key === sortKey) {
+      setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortKey(key);
+      setSortDir('asc');
+    }
+  }
+
   return (
     <>
       <div className="user-select">👤 유저 선택 — 목록에서 선수를 눌러 상세 분석 보기 ▾</div>
       <div className="player-list-head">
-        <span>선수</span><span>역할군</span><span>MOST AGENT</span><span>K/D</span><span>헤드샷</span><span>ADR</span><span>ACS ▲</span><span />
+        <span>선수</span><span>역할군</span><span>MOST AGENT</span>
+        {SORTABLE_COLUMNS.map((col) => (
+          <span
+            key={col.key}
+            className="player-list-sort-head"
+            onClick={() => handleSort(col.key)}
+          >
+            {col.label} {sortKey === col.key ? (sortDir === 'asc' ? '▲' : '▼') : ''}
+          </span>
+        ))}
+        <span />
       </div>
-      {sorted.map((p, i) => {
-        const isTop = i === sorted.length - 1;
+      {sorted.map((p) => {
+        const isSelected = p.id === selectedId;
         return (
           <div
-            className={`player-row ${isTop ? 'top' : ''}`.trim()}
+            className={`player-row ${isSelected ? 'selected' : ''}`.trim()}
             key={p.id}
             onClick={() => onSelect(p.id)}
           >
@@ -32,7 +65,7 @@ export default function PlayerListView({ players, onSelect }) {
             <div className="player-stat-val">{p.kd}</div>
             <div className="player-stat-val">{p.hs}%</div>
             <div className="player-stat-val">{p.adr}</div>
-            <div className={`player-stat-val ${isTop ? 'hot' : ''}`.trim()}>{p.acs}</div>
+            <div className={`player-stat-val ${isSelected ? 'selected' : ''}`.trim()}>{p.acs}</div>
             <div className="player-row-arrow">→</div>
           </div>
         );

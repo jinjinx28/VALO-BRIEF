@@ -6,10 +6,12 @@ import { API_BASE_URL } from './config';
  * 여기 내부 구현이 바뀌어도 나머지 코드는 영향받지 않습니다.
  */
 async function request(path, { method = 'GET', body, headers } = {}) {
+  const token = localStorage.getItem('valo_auth_token');
   const res = await fetch(`${API_BASE_URL}${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...headers,
     },
     credentials: 'include',

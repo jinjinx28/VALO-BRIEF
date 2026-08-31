@@ -50,6 +50,77 @@ background:var(--bg-panel-2);
    gap:10px;
 }
 
+.user-select {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--text-2);
+  margin-bottom: 16px;
+}
+
+.user-select .user-select-link {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.user-select .user-select-link:hover {
+  color: var(--accent-hover);
+}
+
+.map-select-wrap,
+.user-select-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-popover {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 150px;
+  max-height: 260px;
+  overflow-y: auto;
+  background: var(--bg-panel-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: var(--shadow-md);
+  padding: 6px;
+  list-style: none;
+  z-index: 20;
+}
+
+.dropdown-popover li + li {
+  margin-top: 2px;
+}
+
+.dropdown-popover button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--text-2);
+  font-size: 12.5px;
+  padding: 8px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.dropdown-popover button:hover {
+  background: var(--bg-panel-hover);
+  color: var(--text-1);
+}
+
+.dropdown-popover button.is-active {
+  color: var(--text-1);
+  background: var(--accent-soft);
+}
+
 .map-analysis-body {
 display:grid;
    grid-template-columns:220px 1fr;

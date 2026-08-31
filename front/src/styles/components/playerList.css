@@ -1,5 +1,24 @@
 /* 우리팀 분석 - 개인분석 탭 유저 리스트 */
 
+.player-list-head {
+  display: grid;
+  grid-template-columns: 2.4fr 1fr 1.6fr 0.8fr 0.8fr 0.8fr 0.8fr 24px;
+  gap: 12px;
+  padding: 0 20px 10px;
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+.player-list-sort-head {
+  cursor: pointer;
+  text-align: center;
+  user-select: none;
+}
+
+.player-list-sort-head:hover {
+  color: var(--text-1);
+}
+
 .player-row {
   display:grid;
    grid-template-columns:2.4fr 1fr 1.6fr 0.8fr 0.8fr 0.8fr 0.8fr 24px;
@@ -18,11 +37,11 @@
   border-color: var(--border-strong);
 }
 
-.player-row.top {
+.player-row.selected {
   border-color: var(--accent);
 }
 
-.player-stat-val.hot {
+.player-stat-val.selected {
   color: var(--accent);
 }
 

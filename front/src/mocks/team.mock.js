@@ -17,11 +17,11 @@ export const teamProfileMock = {
     { map: '헤이븐', win: 10, lose: 11, winRate: 42 },
   ],
   matchHistory: [
-    { map: '어센트', result: 'win', date: '08.24', time: '9:48 AM', roundScore: '13-7', kda: 2.4, adr: 172, acs: 248, firstBlood: 9, mvp: { agent: 'Jett', player: 'Nova', kda: 3.1, hs: 31, acs: 302 } },
-    { map: '바인드', result: 'lose', date: '08.23', time: '8:10 PM', roundScore: '9-13', kda: 1.5, adr: 134, acs: 190, firstBlood: 4, mvp: { agent: 'Reyna', player: 'Dash', kda: 1.9, hs: 24, acs: 224 } },
-    { map: '헤이븐', result: 'win', date: '08.23', time: '6:30 PM', roundScore: '13-11', kda: 2.1, adr: 158, acs: 226, firstBlood: 7, mvp: { agent: 'Omen', player: 'Iris', kda: 2.6, hs: 20, acs: 251 } },
-    { map: '스플릿', result: 'win', date: '08.22', time: '9:00 PM', roundScore: '13-6', kda: 2.8, adr: 181, acs: 264, firstBlood: 10, mvp: { agent: 'Jett', player: 'Nova', kda: 3.4, hs: 33, acs: 310 } },
-    { map: '로터스', result: 'lose', date: '08.22', time: '6:45 PM', roundScore: '8-13', kda: 1.3, adr: 121, acs: 172, firstBlood: 3, mvp: { agent: 'Sova', player: 'Ruko', kda: 1.6, hs: 18, acs: 199 } },
+    { map: '어센트', result: 'win', date: '08.24', time: '9:48 AM', roundScore: '13-7', kda: 2.4, adr: 172, acs: 248, firstBlood: 9, mvp: { agent: 'Jett', player: 'Nova', kda: 3.1, hs: 31, acs: 302 }, season: 'S2026', act: 'Act 2' },
+    { map: '바인드', result: 'lose', date: '08.23', time: '8:10 PM', roundScore: '9-13', kda: 1.5, adr: 134, acs: 190, firstBlood: 4, mvp: { agent: 'Reyna', player: 'Dash', kda: 1.9, hs: 24, acs: 224 }, season: 'S2026', act: 'Act 2' },
+    { map: '헤이븐', result: 'win', date: '08.23', time: '6:30 PM', roundScore: '13-11', kda: 2.1, adr: 158, acs: 226, firstBlood: 7, mvp: { agent: 'Omen', player: 'Iris', kda: 2.6, hs: 20, acs: 251 }, season: 'S2026', act: 'Act 1' },
+    { map: '스플릿', result: 'win', date: '08.22', time: '9:00 PM', roundScore: '13-6', kda: 2.8, adr: 181, acs: 264, firstBlood: 10, mvp: { agent: 'Jett', player: 'Nova', kda: 3.4, hs: 33, acs: 310 }, season: 'S2026', act: 'Act 1' },
+    { map: '로터스', result: 'lose', date: '08.22', time: '6:45 PM', roundScore: '8-13', kda: 1.3, adr: 121, acs: 172, firstBlood: 3, mvp: { agent: 'Sova', player: 'Ruko', kda: 1.6, hs: 18, acs: 199 }, season: 'S2025', act: 'Act 3' },
   ],
 };
 
