@@ -1,12 +1,15 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Logo from './Logo';
+import SearchBox from '../search/SearchBox';
+import EmptyImageBox from '../common/EmptyImageBox';
+import { useAuth } from '../../context/AuthContext';
 import { ROUTES } from '../../constants/routes';
 
 const DEMO_TEAM_NAME = 'team-ascend';
 const DEMO_TEAM_TAG = 'ASC';
 
-const MENU_LINKS = [
+const NAV_ITEMS = [
   { label: '개인 검색', to: '/players/example/0000' },
   { label: '상대팀 전적 검색', to: ROUTES.team(DEMO_TEAM_NAME, DEMO_TEAM_TAG) },
   { label: '승부 예측', to: ROUTES.predict(DEMO_TEAM_NAME, DEMO_TEAM_TAG) },
@@ -14,26 +17,80 @@ const MENU_LINKS = [
 ];
 
 export default function MainHeader() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { isAuthenticated, logout } = useAuth();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // 메인 페이지('/')일 때는 헤더 검색창을 아예 DOM 생성하지 않음 (유지보수 핵심)
+  const isHomePage = location.pathname === '/';
 
   return (
     <header className="site-header">
-      <Link to="/"><Logo /></Link>
-      <div className="header-right">
-        <Link to="/login" className="btn-pill">login</Link>
-        <Link to="/signup" className="btn-pill">signup</Link>
-        <button
-          type="button"
-          className="hamburger"
-          aria-label="메뉴 열기"
-          aria-expanded={sidebarOpen}
-          onClick={() => setSidebarOpen(true)}
-        >
-          <span /><span /><span />
-        </button>
-      </div>
+      <Link to="/"><Logo size="sm" /></Link>
 
-      {sidebarOpen ? (
+      {/* 메인 페이지가 아닐 때만 헤더 내 검색창 표시 */}
+      {!isHomePage && <SearchBox variant="header" />}
+
+      {isAuthenticated ? (
+        /* 로그인 후: NAV 메뉴 + 프로필 드롭다운 */
+        <div className="header-right">
+          <nav className="nav-menu">
+            {NAV_ITEMS.map((item) => {
+              const isActive = location.pathname.startsWith(item.to.split('/')[1]);
+              return (
+                <Link key={item.label} to={item.to} className={isActive ? 'on' : ''}>
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
+
+          <div className="profile-menu">
+            <button
+              type="button"
+              className="profile-avatar-btn"
+              onClick={() => setDropdownOpen((prev) => !prev)}
+              aria-label="프로필 메뉴"
+            >
+              <EmptyImageBox className="profile-avatar-img" label="" />
+            </button>
+            {dropdownOpen && (
+              <div className="profile-dropdown">
+                <button
+                  type="button"
+                  onClick={() => {
+                    logout();
+                    setDropdownOpen(false);
+                    navigate('/');
+                  }}
+                >
+                  로그아웃
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      ) : (
+        /* 로그인 전: login/signup + 햄버거 메뉴 */
+        <div className="header-right">
+          <Link to="/login" className="btn-pill">login</Link>
+          <Link to="/signup" className="btn-pill">signup</Link>
+          <button
+            type="button"
+            className="hamburger"
+            aria-label="메뉴 열기"
+            aria-expanded={sidebarOpen}
+            onClick={() => setSidebarOpen(true)}
+          >
+            <span /><span /><span />
+          </button>
+        </div>
+      )}
+
+      {/* 로그인 전 사이드바 */}
+      {!isAuthenticated && sidebarOpen && (
         <>
           <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />
           <nav className="sidebar-panel">
@@ -46,7 +103,7 @@ export default function MainHeader() {
               ✕
             </button>
             <div className="sidebar-links">
-              {MENU_LINKS.map((item) => (
+              {NAV_ITEMS.map((item) => (
                 <Link key={item.label} to={item.to} onClick={() => setSidebarOpen(false)}>
                   {item.label}
                 </Link>
@@ -54,7 +111,7 @@ export default function MainHeader() {
             </div>
           </nav>
         </>
-      ) : null}
+      )}
     </header>
   );
 }
