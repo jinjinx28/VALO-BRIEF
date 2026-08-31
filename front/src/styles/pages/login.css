@@ -59,7 +59,7 @@
 /* 4. Input 영역 폭 100% 및 내부 여백 */
 .field {
   width: 100%;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0;
 }
 
 /* 5. 아이디 저장 체크박스 */
@@ -142,4 +142,61 @@
 .field-icon-btn:hover .eye-icon {
   color: #111111;
   transform: scale(1.1);
+}
+
+/* 로그인 폼 전체 레이아웃 세부 제어 */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; 
+  width: 100%;
+}
+
+/* 필드 + 에러 메시지 래퍼 */
+.field-block {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 1.2rem; 
+}
+
+/* 인풋 테두리 강하게 포커스 */
+.field.is-invalid {
+  border-color: #ff4655 !important;
+  box-shadow: 0 0 6px rgba(255, 70, 85, 0.4);
+}
+
+/* 텍스트 창 바로 밑에 바짝 붙는 에러 문구 */
+.field-error-msg {
+  color: #ff4655;
+  font-size: 11px;
+  font-weight: 500;
+  padding-left: 6px;
+  margin-top: 4px; 
+  text-align: left;
+  line-height: 1.2;
+  animation: fieldErrorFade 0.15s ease-out;
+}
+
+.checkbox-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0; 
+  margin-bottom: 2rem;
+  font-size: 0.875rem;
+  color: #a0a0a0;
+  justify-content: flex-start;
+}
+
+@keyframes fieldErrorFade {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
