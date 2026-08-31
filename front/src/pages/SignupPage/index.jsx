@@ -5,8 +5,15 @@ import StepTeamInfo from './StepTeamInfo';
 import { signup } from '../../api/auth';
 
 const INITIAL_FORM = {
-  email: '', id: '', password: '', confirmPassword: '', agree: false,
-  teamName: '', teamTag: '',
+  email: '',
+  id: '',
+  password: '',
+  confirmPassword: '',
+  agree: false,
+  teamName: '',
+  teamTag: '',
+  riotGameName: '',
+  riotTagLine: '',
 };
 
 export default function SignupPage() {
@@ -17,13 +24,27 @@ export default function SignupPage() {
   const handleChange = (key, value) => setForm((prev) => ({ ...prev, [key]: value }));
 
   async function handleSubmit() {
-    await signup(form);
-    navigate('/login');
+    try {
+      await signup(form);
+      alert('회원가입이 완료되었습니다!');
+      navigate('/login');
+    } catch (err) {
+      alert('회원가입 처리 중 오류가 발생했습니다.');
+    }
   }
 
   return step === 1 ? (
-    <StepAccount form={form} onChange={handleChange} onNext={() => setStep(2)} />
+    <StepAccount
+      form={form}
+      onChange={handleChange}
+      onNext={() => setStep(2)}
+    />
   ) : (
-    <StepTeamInfo form={form} onChange={handleChange} onSubmit={handleSubmit} />
+    <StepTeamInfo
+      form={form}
+      onChange={handleChange}
+      onPrev={() => setStep(1)}
+      onSubmit={handleSubmit}
+    />
   );
 }
